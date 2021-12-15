@@ -20,14 +20,14 @@ export async function findUserById(citizenId: string) {
 }
 
 export async function addTimelineUser(values: any) {
-    const { citizenId, from, to, locationType, locationName } = values
+    const { citizenId, from, to, detail, locationType, locationName } = values
     try {
         await UserModel.updateOne(
             { citizenId }, 
             { 
                 $push: { 
                     timelines: {
-                        $each: [{ from, to, locationType, locationName }]
+                        $each: [{ from, to, detail, locationType, locationName }]
                     }
                 } 
             }

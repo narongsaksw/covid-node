@@ -19,6 +19,9 @@ export const createUserSchema = object({
         to: string({
             required_error: 'To Date is required'
         }),
+        detail: string({
+            required_error: 'Detail is required'
+        }),
         locationType: string({
             required_error: 'locationType is required'
         }),

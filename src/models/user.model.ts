@@ -6,6 +6,7 @@ export interface UserDocument extends mongoose.Document {
     occupation: string;
     from: string;
     to: string;
+    detail: string;
     locationType: string;
     locationName: string;
     createdAt: Date;
@@ -36,6 +37,10 @@ const userSchema = new mongoose.Schema({
                 required: true
             },
             to: { 
+                type: String,
+                required: true,
+            },
+            detail: { 
                 type: String,
                 required: true,
             },
