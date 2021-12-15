@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { CreateUserInput } from "../schema/user.schema";
-import { createUser, findUserById, addTimelineUser, getAllUsers } from "../service/user.service";
+import { createUser, findUserById, addTimelineUser, getAllUsers, deleteTimeline } from "../service/user.service";
 
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput["body"]>, res: Response){
     try {
@@ -23,6 +23,16 @@ export async function getAllUsersHandler(req: Request, res: Response) {
     try {
         const users = await getAllUsers()
         return res.status(200).send(users)
+    } catch (e: any) {
+        return res.status(404).send(e.message)
+    }
+}
+
+export async function deleteTimelineHandler(req: Request, res: Response) {
+    const { citizenId, timelineId } = req.params
+    try {
+        await deleteTimeline(citizenId, timelineId)
+        return res.status(200).send('delete timeline successfully.')
     } catch (e: any) {
         return res.status(404).send(e.message)
     }

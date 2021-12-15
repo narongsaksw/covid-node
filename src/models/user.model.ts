@@ -11,6 +11,7 @@ export interface UserDocument extends mongoose.Document {
     locationName: string;
     createdAt: Date;
     updatedAt: Date;
+    timelines: [{ _id: any }]
 }
 
 const userSchema = new mongoose.Schema({
@@ -31,7 +32,8 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     timelines: {
-        type: [{ 
+        type: [{
+            // _id: ,  
             from: { 
                 type: String,
                 required: true

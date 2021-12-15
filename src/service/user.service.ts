@@ -1,11 +1,11 @@
-import { DocumentDefinition } from 'mongoose'
+import { DocumentDefinition, Types } from 'mongoose'
 
 import UserModel, { UserDocument } from '../models/user.model';
 
 export async function createUser(user: DocumentDefinition<Omit<UserDocument, 'createdAt' | 'updatedAt'>>) {
     try {
-        const { from, to ,locationType, locationName } = user
-        await UserModel.create({ ...user, timelines: [{ from, to, locationType, locationName }] })
+        const { from, to , detail, locationType, locationName } = user
+        await UserModel.create({ ...user, timelines: [{ from, to, detail, locationType, locationName }] })
     } catch (e: any) {
         throw new Error(e)
     }
@@ -40,4 +40,19 @@ export async function addTimelineUser(values: any) {
 export async function getAllUsers() {
     const users = await UserModel.find({})
     return users
+}
+
+export async function deleteTimeline(citizenId: string, timelineId: string) {
+    try {
+        const user = await UserModel.findOne({ citizenId })
+
+        console.log(user);
+        
+        if(user !== null) {
+            user.timelines.filter(timeline => timeline._id.valueOf() !== timelineId)
+            user.save()        
+        }
+    } catch (e: any) {
+        throw new Error(e)
+    }
 }
