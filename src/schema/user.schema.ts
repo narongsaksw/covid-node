@@ -25,9 +25,6 @@ export const createUserSchema = object({
         locationType: string({
             required_error: 'locationType is required'
         }),
-        locationName: string({
-            required_error: 'locationName is required'
-        }),
     })
 })
 

@@ -44,14 +44,11 @@ export async function getAllUsers() {
 
 export async function deleteTimeline(citizenId: string, timelineId: string) {
     try {
-        const user = await UserModel.findOne({ citizenId })
-
-        console.log(user);
-        
-        if(user !== null) {
-            user.timelines.filter(timeline => timeline._id.valueOf() !== timelineId)
-            user.save()        
-        }
+        await UserModel.updateOne({ citizenId }, {
+            $pull: {
+                timelines: { _id: new Types.ObjectId(timelineId) }
+            }
+        })
     } catch (e: any) {
         throw new Error(e)
     }
